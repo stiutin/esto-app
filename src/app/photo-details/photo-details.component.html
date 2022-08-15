@@ -1,6 +1,0 @@
-<div *ngIf="photo" class="single-photo-wrapper">
-  <figure>
-    <img src="{{photo.url}}" alt="{{photo.title}}" title="{{photo.title}}">
-  </figure>
-  <button (click)="removePhoto(photo)" [routerLink]="'/photos'" class="remove-from-fav-btn">Remove from favorites</button>
-</div>

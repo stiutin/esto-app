@@ -1,7 +1,10 @@
 <div class="photo-wrapper" *ngIf="photos">
-  <div *ngFor="let photo of photos | slice:0:visibleImages" class="photo">
+  <div
+    *ngFor="let photo of photos | slice: 0: visibleImages"
+    class="photo"
+  >
     <figure>
-      <img src="{{photo.url}}" alt="{{photo.title}}" title="{{photo.title}}">
+      <img [src]="photo?.url" [alt]="" [title]="photo?.title">
     </figure>
     <button (click)="addToFav(photo, $event)" class="add-to-fav-btn">Add to Favorites</button>
   </div>

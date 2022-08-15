@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-
-import { Photo } from '../photo';
-import { PhotoDataService } from '../photo-data.service';
+import { Photo } from '../core/interfaces/photo';
+import { PhotoDataService } from '../core/services/photo-data.service';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 @Component({
   selector: 'app-photos',
@@ -10,31 +10,39 @@ import { PhotoDataService } from '../photo-data.service';
   styleUrls: ['./photos.component.scss']
 })
 
+@UntilDestroy()
 export class PhotosComponent implements OnInit {
-
-  photos: Photo[];
-  visibleImages: number = 9;
-  favoritePhotos: Array<{id: number, url: string, title: string}> = [];
+  public photos: Photo[] = [];
+  public favoritePhotos: Photo[];
+  public visibleImages: number = 9;
 
   constructor(
     private photoDataService: PhotoDataService,
     private titleService: Title
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.titleService.setTitle('Esto App | Home');
     this.getPhotos();
-    this.photoDataService.currentState.subscribe(favorite => this.favoritePhotos = favorite);
+    this.photoDataService
+      .currentState
+      .pipe(untilDestroyed(this))
+      .subscribe(favorite => this.favoritePhotos = favorite);
   }
 
-  getPhotos(): void {
-    this.photoDataService.getPhotos().subscribe(data => this.photos = data);
+  public getPhotos(): void {
+    this.photoDataService
+      .getPhotos()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => this.photos = data);
   }
 
-  addToFav(photo: any, event: any) {
-    this.favoritePhotos.push({'id': photo.id, 'url': photo.url, 'title': photo.title});
+  public addToFav(photo: Photo, event: MouseEvent): void {
+    this.favoritePhotos = this.favoritePhotos || [];
+    let selectedItem = this.photos.find((res: Photo) => res.id === photo.id);
+    this.favoritePhotos.push(selectedItem);
     this.photoDataService.updateFavoritesList(this.favoritePhotos);
-    event.target.disabled = true;
+    (event.target as HTMLButtonElement).disabled = true;
   }
 
   increaseVisibleImagesByClick(): void {
@@ -45,8 +53,9 @@ export class PhotosComponent implements OnInit {
     this.visibleImages += 1;
   }
 
-  @HostListener('window:scroll') increaseVisibleImagesByScroll(): void {
-      setTimeout(() => { this.increaseVisibleImagesCounter() }, 300);
-    }
+  @HostListener('window:scroll')
+  increaseVisibleImagesByScroll(): void {
+    setTimeout(() => { this.increaseVisibleImagesCounter() }, 300);
+  }
 
 }

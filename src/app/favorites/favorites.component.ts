@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { PhotoDataService } from '../core/services/photo-data.service';
+import {Photo} from '../core/interfaces/photo';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
-import { PhotoDataService } from '../photo-data.service';
-
+@UntilDestroy()
 @Component({
   selector: 'app-favorites',
   templateUrl: './favorites.component.html',
@@ -10,8 +12,7 @@ import { PhotoDataService } from '../photo-data.service';
 })
 
 export class FavoritesComponent implements OnInit {
-
-  favoritePhotos: Array<{id: number, url: string, title: string}>;
+  public favoritePhotos: Photo[];
 
   constructor(
     private photoDataService: PhotoDataService,
@@ -20,7 +21,10 @@ export class FavoritesComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Esto App | Favorite Photos');
-    this.photoDataService.currentState.subscribe(favorite => this.favoritePhotos = favorite);
+    this.photoDataService
+      .currentState
+      .pipe(untilDestroyed(this))
+      .subscribe(favorite => this.favoritePhotos = favorite);
   }
 
 }

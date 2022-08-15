@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { PhotosComponent } from './photos/photos.component';
 import { FavoritesComponent } from './favorites/favorites.component';
-import { PhotoDetailsComponent } from './photo-details/photo-details.component';
+import { PhotoDetailsComponent } from './photos/photo-details/photo-details.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PhotoDetailsComponent } from './photo-details/photo-details.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

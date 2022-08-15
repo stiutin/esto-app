@@ -2,9 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { Photo } from '../photo';
-import { PhotoDataService } from '../photo-data.service';
+import { Photo } from '../../core/interfaces/photo';
+import { PhotoDataService } from '../../core/services/photo-data.service';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-photo-details',
   templateUrl: './photo-details.component.html',
@@ -12,9 +14,8 @@ import { PhotoDataService } from '../photo-data.service';
 })
 
 export class PhotoDetailsComponent implements OnInit {
-  
   @Input() photo: Photo;
-  favoritePhotos: Array<{id: number, url: string, title: string}>;
+  favoritePhotos: Photo[];
 
   constructor(
     private route: ActivatedRoute,
@@ -22,10 +23,16 @@ export class PhotoDetailsComponent implements OnInit {
     private titleService: Title
   ) {}
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.titleService.setTitle('Esto App | Photo');
     this.getPhoto();
-    this.photoDataService.currentState.subscribe(favorite => this.favoritePhotos = favorite);
+    this.photoDataService
+      .currentState
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (favorite: Photo[]) => this.favoritePhotos = favorite,
+        error: () => console.log('Error')
+      })
   }
 
   getPhoto(): void {
