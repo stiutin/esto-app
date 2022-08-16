@@ -21,10 +21,11 @@ export class PhotoDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private photoDataService: PhotoDataService,
     private titleService: Title
-  ) {}
+  ) {
+    this.titleService.setTitle('Esto App | Photo');
+  }
 
   public ngOnInit(): void {
-    this.titleService.setTitle('Esto App | Photo');
     this.getPhoto();
     this.photoDataService
       .currentState
@@ -35,12 +36,18 @@ export class PhotoDetailsComponent implements OnInit {
       })
   }
 
-  getPhoto(): void {
-    const id: number = +this.route.snapshot.paramMap.get('id');
-    this.photoDataService.getPhoto(id).subscribe(photo => this.photo = photo);
+  public getPhoto(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.photoDataService
+      .getPhoto(id)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (photo: Photo) => this.photo = photo,
+        error: () => console.log('Error')
+      });
   }
 
-  removePhoto(photo: number): void {
+  public removePhoto(photo: number): void {
     this.favoritePhotos.splice(photo, 1);
     this.photoDataService.updateFavoritesList(this.favoritePhotos);
   }

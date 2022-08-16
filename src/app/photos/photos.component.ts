@@ -4,25 +4,26 @@ import { Photo } from '../core/interfaces/photo';
 import { PhotoDataService } from '../core/services/photo-data.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-photos',
   templateUrl: './photos.component.html',
   styleUrls: ['./photos.component.scss']
 })
 
-@UntilDestroy()
 export class PhotosComponent implements OnInit {
   public photos: Photo[] = [];
   public favoritePhotos: Photo[];
-  public visibleImages: number = 9;
+  public visibleImages = 9;
 
   constructor(
     private photoDataService: PhotoDataService,
     private titleService: Title
-  ) { }
+  ) {
+    this.titleService.setTitle('Esto App | Home');
+  }
 
   public ngOnInit(): void {
-    this.titleService.setTitle('Esto App | Home');
     this.getPhotos();
     this.photoDataService
       .currentState
@@ -32,7 +33,7 @@ export class PhotosComponent implements OnInit {
 
   public getPhotos(): void {
     this.photoDataService
-      .getPhotos()
+      .getPhotosList()
       .pipe(untilDestroyed(this))
       .subscribe(data => this.photos = data);
   }
@@ -45,16 +46,16 @@ export class PhotosComponent implements OnInit {
     (event.target as HTMLButtonElement).disabled = true;
   }
 
-  increaseVisibleImagesByClick(): void {
+  public increaseVisibleImagesByClick(): void {
     this.visibleImages += 1;
   }
 
-  increaseVisibleImagesCounter(): void {
+  public increaseVisibleImagesCounter(): void {
     this.visibleImages += 1;
   }
 
   @HostListener('window:scroll')
-  increaseVisibleImagesByScroll(): void {
+  public increaseVisibleImagesByScroll(): void {
     setTimeout(() => { this.increaseVisibleImagesCounter() }, 300);
   }
 

@@ -17,7 +17,7 @@ export class PhotoDataService {
 
   constructor(private http: HttpClient) { }
 
-  public getPhotos(): Observable<Photo[]> {
+  public getPhotosList(): Observable<Photo[]> {
     return this.http.get<Photo[]>(`${this.url}`);
   }
 
