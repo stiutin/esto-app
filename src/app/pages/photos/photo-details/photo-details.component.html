@@ -1,8 +1,7 @@
-@if (photo) {
-  <div class="single-photo-wrapper">
-    <figure>
-      <img [src]="photo?.url" [alt]=" " [title]="photo?.title">
-    </figure>
-    <button (click)="removePhoto(photo.id)" [routerLink]="'/photos'" class="remove-from-fav-btn">Remove from favorites</button>
-  </div>
-}
+@let photo = photo$ | async;
+<div class="single-photo-wrapper">
+  <figure>
+    <img [src]="photo.url" [alt]=" " [title]="photo.title">
+  </figure>
+  <button (click)="removePhoto(photo.id)" [routerLink]="'/photos'" class="remove-from-fav-btn">Remove from Cart</button>
+</div>

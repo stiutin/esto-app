@@ -1,65 +1,62 @@
 import { Component, OnInit, HostListener, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import { SlicePipe } from '@angular/common';
-import {PhotoDataService} from "../../shared/services/photo-data.service";
-import {Photo} from "../../shared/entities/interfaces/photo";
+import { Store } from '@ngrx/store';
+import {map, Observable} from 'rxjs';
+import {AsyncPipe, SlicePipe} from '@angular/common';
+import { Photo } from '../../shared/entities/interfaces/photo';
+import * as PhotoActions from '../../store/actions';
+import * as PhotoSelectors from '../../store/selectors';
+import {UntilDestroy} from "@ngneat/until-destroy";
 
 @UntilDestroy()
 @Component({
   selector: 'app-photos',
   templateUrl: './photos.component.html',
   styleUrls: ['./photos.component.scss'],
-  imports: [SlicePipe],
+  imports: [SlicePipe, AsyncPipe],
   standalone: true,
 })
 
 export class PhotosComponent implements OnInit {
-  private photoDataService = inject(PhotoDataService);
+  private store = inject(Store);
+  protected photos$: Observable<Photo[]> = this.store.select(PhotoSelectors.selectPhotos);
+  protected favoritePhotos$: Observable<Photo[]> = this.store.select(PhotoSelectors.selectFavoritePhotos);
+  protected visibleImages = 9;
   private titleService = inject(Title);
-
-  public photos: Photo[] = [];
-  public favoritePhotos: Photo[];
-  public visibleImages = 9;
 
   constructor() {
     this.titleService.setTitle('Esto App | Home');
   }
 
   public ngOnInit(): void {
-    this.getPhotos();
-    this.photoDataService
-      .currentState
-      .pipe(untilDestroyed(this))
-      .subscribe(favorite => this.favoritePhotos = favorite);
+    this.store.dispatch(PhotoActions.loadPhotos());
   }
 
-  public getPhotos(): void {
-    this.photoDataService
-      .getPhotosList()
-      .pipe(untilDestroyed(this))
-      .subscribe(data => this.photos = data);
+  protected favoriteIds$ = this.favoritePhotos$.pipe(
+    map(favs => favs.map(f => f.id))
+  );
+
+  protected isFavorite(photoId: number, favoriteIds: number[]): boolean {
+    return favoriteIds.includes(photoId);
   }
 
-  public addToFav(photo: Photo, event: MouseEvent): void {
-    this.favoritePhotos = this.favoritePhotos || [];
-    let selectedItem = this.photos.find((res: Photo) => res.id === photo.id);
-    this.favoritePhotos.push(selectedItem);
-    this.photoDataService.updateFavoritesList(this.favoritePhotos);
+  protected addToFav(photo: Photo, event: MouseEvent): void {
+    this.store.dispatch(PhotoActions.addToCart({ photo }));
     (event.target as HTMLButtonElement).disabled = true;
   }
 
-  public increaseVisibleImagesByClick(): void {
+  protected increaseVisibleImagesByClick(): void {
     this.visibleImages += 1;
   }
 
-  public increaseVisibleImagesCounter(): void {
+  private increaseVisibleImagesCounter(): void {
     this.visibleImages += 1;
   }
 
   @HostListener('window:scroll')
   public increaseVisibleImagesByScroll(): void {
-    setTimeout(() => { this.increaseVisibleImagesCounter() }, 300);
+    setTimeout(() => {
+      this.increaseVisibleImagesCounter();
+    }, 300);
   }
-
 }

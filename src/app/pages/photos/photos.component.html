@@ -1,11 +1,17 @@
-@if (photos) {
+@if (photos$) {
   <div class="photo-wrapper">
-    @for (photo of photos | slice: 0: visibleImages; track photo) {
+    @for (photo of photos$ | async | slice: 0: visibleImages; track photo) {
       <div class="photo">
         <figure>
           <img [src]="photo.thumbnailUrl" [alt]="" [title]="photo?.title">
         </figure>
-        <button (click)="addToFav(photo, $event)" class="add-to-fav-btn">Add to Favorites</button>
+        <button
+          (click)="addToFav(photo, $event)"
+          [disabled]="isFavorite(photo.id, favoriteIds$ | async)"
+          class="add-to-fav-btn"
+        >
+          {{ isFavorite(photo.id, favoriteIds$ | async) ? 'Added' : 'Add to Cart' }}
+        </button>
       </div>
     }
   </div>

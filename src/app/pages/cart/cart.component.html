@@ -1,6 +1,6 @@
-@if (favoritePhotos) {
+@if (favoritePhotos$) {
   <div class="photo-wrapper">
-    @for (photo of favoritePhotos; track photo) {
+    @for (photo of favoritePhotos$ | async; track photo) {
       <div class="photo">
         <a routerLink="/photos/{{ photo?.id }}">
           <figure>

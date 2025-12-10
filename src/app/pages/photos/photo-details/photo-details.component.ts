@@ -1,57 +1,37 @@
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as PhotoSelectors from '../../../store/selectors';
+import * as PhotoActions from '../../../store/actions';
+import { Photo } from '../../../shared/entities/interfaces/photo';
 
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {PhotoDataService} from "../../../shared/services/photo-data.service";
-import {Photo} from "../../../shared/entities/interfaces/photo";
-
-
-@UntilDestroy()
 @Component({
   selector: 'app-photo-details',
   templateUrl: './photo-details.component.html',
   styleUrls: ['./photo-details.component.scss'],
-  imports: [RouterLink],
+  imports: [RouterLink, AsyncPipe],
   standalone: true,
 })
-
 export class PhotoDetailsComponent implements OnInit {
+  private store = inject(Store);
   private route = inject(ActivatedRoute);
-  private photoDataService = inject(PhotoDataService);
   private titleService = inject(Title);
-
-  @Input() photo: Photo;
-  favoritePhotos: Photo[];
+  protected photo$: Observable<Photo>;
+  private photoId: number;
 
   constructor() {
-    this.titleService.setTitle('Esto App | Photo');
+    this.titleService.setTitle('Esto App | Cart');
   }
 
   public ngOnInit(): void {
-    this.getPhoto();
-    this.photoDataService
-      .currentState
-      .pipe(untilDestroyed(this))
-      .subscribe({
-        next: (favorite: Photo[]) => this.favoritePhotos = favorite,
-        error: () => console.log('Error')
-      })
+    this.photoId = +this.route.snapshot.paramMap.get('id');
+    this.photo$ = this.store.select(PhotoSelectors.selectPhotoById(this.photoId));
   }
 
-  public getPhoto(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.photoDataService
-      .getPhoto(id)
-      .pipe(untilDestroyed(this))
-      .subscribe({
-        next: (photo: Photo) => this.photo = photo,
-        error: () => console.log('Error')
-      });
-  }
-
-  public removePhoto(photo: number): void {
-    this.favoritePhotos.splice(photo, 1);
-    this.photoDataService.updateFavoritesList(this.favoritePhotos);
+  protected removePhoto(photoId: number): void {
+    this.store.dispatch(PhotoActions.removeFromCart({ photoId }));
   }
 }
