@@ -1,16 +1,16 @@
 import { createAction, props } from "@ngrx/store";
-import { Photo } from '../shared/entities/interfaces/photo';
+import {IProduct} from "../shared/entities/interfaces/product.interface";
 
 export const addToCart = createAction(
   '[Photo] Add to Cart',
-  props<{ photo: Photo }>()
+  props<{ photo: IProduct }>()
 );
 
 export const loadPhotos = createAction('[Photo] Load Photos');
 
 export const loadPhotosSuccess = createAction(
   '[Photo] Load Photos Success',
-  props<{ photos: Photo[] }>()
+  props<{ photos: IProduct[] }>()
 );
 
 export const loadPhotosFailure = createAction(

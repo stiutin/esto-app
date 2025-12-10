@@ -1,3 +1,3 @@
-export enum UrlEnum {
-  photos = 'photos',
+export enum EUrlEndpoints {
+  Products = 'products',
 }

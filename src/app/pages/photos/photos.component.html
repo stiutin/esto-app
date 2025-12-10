@@ -1,10 +1,9 @@
 @if (photos$) {
-  <div class="photo-wrapper">
-    @for (photo of photos$ | async | slice: 0: visibleImages; track photo) {
-      <div class="photo">
-        <figure>
-          <img [src]="photo.thumbnailUrl" [alt]="" [title]="photo?.title">
-        </figure>
+  <div class="products-list">
+    @for (photo of photos$ | async; track photo) {
+      <div class="product">
+        <img class="product-img" [src]="photo.thumbnail" [alt]="photo.title">
+        <div class="product-title">{{ photo.title }}</div>
         <button
           (click)="addToFav(photo, $event)"
           [disabled]="isFavorite(photo.id, favoriteIds$ | async)"
@@ -16,7 +15,3 @@
     }
   </div>
 }
-<div class="load-more-btn" (click)="increaseVisibleImagesByClick()" >
-  <i class="fas fa-caret-down"></i>
-  Load more
-</div>

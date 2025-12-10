@@ -1,10 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import { Photo } from '../shared/entities/interfaces/photo';
 import * as PhotoActions from './actions';
+import {IProduct} from "../shared/entities/interfaces/product.interface";
 
 export interface PhotoState {
-  photos: Photo[];
-  favoritePhotos: Photo[];
+  photos: IProduct[];
+  favoritePhotos: IProduct[];
   error: any;
 }
 

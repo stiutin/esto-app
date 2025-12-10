@@ -21,17 +21,15 @@
     &__link {
       display: block;
       font-size: 16px;
-      line-height: 120%;
-      font-family: "Roboto", sans-serif;
+      line-height: 100%;
       font-weight: 500;
       color: #fefefe;
       background-color: #adadad;
       border-radius: 4px;
-      padding: 10px 20px;
-      margin: 0 5px;
+      padding: 12px 32px;
+      margin: 0 4px;
       text-decoration: none;
       transition: background-color 500ms ease-in;
-      min-width: 120px;
       text-align: center;
 
       &:hover {

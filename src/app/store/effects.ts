@@ -6,15 +6,24 @@ import { catchError, map, mergeMap, of } from 'rxjs';
 
 @Injectable()
 export class PhotoEffects {
-  constructor(private actions$: Actions, private photoService: PhotoDataService) {}
+  constructor(
+    private readonly actions$: Actions,
+    private readonly photoService: PhotoDataService
+  ) {}
 
   loadPhotos$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PhotoActions.loadPhotos),
       mergeMap(() =>
-        this.photoService.getPhotosList().pipe(
-          map(photos => PhotoActions.loadPhotosSuccess({ photos })),
-          catchError(error => of(PhotoActions.loadPhotosFailure({ error })))
+        this.photoService.getProducts().pipe(
+          map(response =>
+            PhotoActions.loadPhotosSuccess({
+              photos: response.products
+            })
+          ),
+          catchError(error =>
+            of(PhotoActions.loadPhotosFailure({ error }))
+          )
         )
       )
     )
