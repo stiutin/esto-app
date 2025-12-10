@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { PhotoState } from './reducer';
-import {Photo} from "../shared/entities/interfaces/photo";
+import {IProduct} from "../shared/entities/interfaces/product.interface";
 
 export const selectPhotoState = createFeatureSelector<PhotoState>('photos');
 
@@ -16,5 +16,5 @@ export const selectFavoritePhotos = createSelector(
 
 export const selectPhotoById = (photoId: number) => createSelector(
   selectPhotoState,
-  (state): Photo | undefined => state.photos.find(p => p.id === photoId)
+  (state): IProduct | undefined => state.photos.find(p => p.id === photoId)
 );

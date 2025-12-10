@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as PhotoSelectors from '../../../store/selectors';
 import * as PhotoActions from '../../../store/actions';
-import { Photo } from '../../../shared/entities/interfaces/photo';
+import {IProduct} from "../../../shared/entities/interfaces/product.interface";
 
 @Component({
   selector: 'app-photo-details',
@@ -19,7 +19,7 @@ export class PhotoDetailsComponent implements OnInit {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
   private titleService = inject(Title);
-  protected photo$: Observable<Photo>;
+  protected photo$: Observable<IProduct>;
   private photoId: number;
 
   constructor() {
