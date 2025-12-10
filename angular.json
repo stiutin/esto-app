@@ -71,18 +71,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "estoApp:build"
+            "buildTarget": "estoApp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "estoApp:build:production"
+              "buildTarget": "estoApp:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "estoApp:build"
+            "buildTarget": "estoApp:build"
           }
         },
         "test": {
