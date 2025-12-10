@@ -4,7 +4,7 @@
     class="photo"
   >
     <figure>
-      <img [src]="photo?.url" [alt]="" [title]="photo?.title">
+      <img [src]="photo.thumbnailUrl" [alt]="" [title]="photo?.title">
     </figure>
     <button (click)="addToFav(photo, $event)" class="add-to-fav-btn">Add to Favorites</button>
   </div>
