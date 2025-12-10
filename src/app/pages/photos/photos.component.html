@@ -1,9 +1,7 @@
 @if (photos) {
   <div class="photo-wrapper">
     @for (photo of photos | slice: 0: visibleImages; track photo) {
-      <div
-        class="photo"
-        >
+      <div class="photo">
         <figure>
           <img [src]="photo.thumbnailUrl" [alt]="" [title]="photo?.title">
         </figure>
@@ -12,7 +10,7 @@
     }
   </div>
 }
-<div (click)="increaseVisibleImagesByClick()" class="load-more-btn">
+<div class="load-more-btn" (click)="increaseVisibleImagesByClick()" >
   <i class="fas fa-caret-down"></i>
   Load more
 </div>
