@@ -1,16 +1,17 @@
 import { Component, OnInit, HostListener, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Photo } from '../core/interfaces/photo';
-import { PhotoDataService } from '../core/services/photo-data.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import { SlicePipe } from '@angular/common';
+import {PhotoDataService} from "../../shared/services/photo-data.service";
+import {Photo} from "../../shared/entities/interfaces/photo";
 
 @UntilDestroy()
 @Component({
-    selector: 'app-photos',
-    templateUrl: './photos.component.html',
-    styleUrls: ['./photos.component.scss'],
-    imports: [SlicePipe]
+  selector: 'app-photos',
+  templateUrl: './photos.component.html',
+  styleUrls: ['./photos.component.scss'],
+  imports: [SlicePipe],
+  standalone: true,
 })
 
 export class PhotosComponent implements OnInit {

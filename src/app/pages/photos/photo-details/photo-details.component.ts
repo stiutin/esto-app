@@ -2,17 +2,18 @@ import { Component, OnInit, Input, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { Photo } from '../../core/interfaces/photo';
-import { PhotoDataService } from '../../core/services/photo-data.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {PhotoDataService} from "../../../shared/services/photo-data.service";
+import {Photo} from "../../../shared/entities/interfaces/photo";
 
 
 @UntilDestroy()
 @Component({
-    selector: 'app-photo-details',
-    templateUrl: './photo-details.component.html',
-    styleUrls: ['./photo-details.component.scss'],
-    imports: [RouterLink]
+  selector: 'app-photo-details',
+  templateUrl: './photo-details.component.html',
+  styleUrls: ['./photo-details.component.scss'],
+  imports: [RouterLink],
+  standalone: true,
 })
 
 export class PhotoDetailsComponent implements OnInit {
@@ -22,9 +23,6 @@ export class PhotoDetailsComponent implements OnInit {
 
   @Input() photo: Photo;
   favoritePhotos: Photo[];
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() {
     this.titleService.setTitle('Esto App | Photo');
@@ -42,7 +40,7 @@ export class PhotoDetailsComponent implements OnInit {
   }
 
   public getPhoto(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = +this.route.snapshot.paramMap.get('id');
     this.photoDataService
       .getPhoto(id)
       .pipe(untilDestroyed(this))

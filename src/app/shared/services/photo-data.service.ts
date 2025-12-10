@@ -2,9 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
-import { Photo } from '../interfaces/photo';
-import {apiUrl} from '../constants/constants';
-import {UrlEnum} from '../enums/url.enum';
+import { Photo } from '../entities/interfaces/photo';
+import {apiUrl} from '../entities/constants/constants';
+import {UrlEnum} from '../entities/enums/url.enum';
 
 @Injectable({
   providedIn: 'root'
