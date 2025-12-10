@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
@@ -11,11 +11,16 @@ import {UrlEnum} from '../enums/url.enum';
 })
 
 export class PhotoDataService {
+  private http = inject(HttpClient);
+
   public arraySource = new BehaviorSubject<Photo[]>(null);
   public currentState = this.arraySource.asObservable();
   private url = `${apiUrl}${UrlEnum.photos}`;
 
-  constructor(private http: HttpClient) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   public getPhotosList(): Observable<Photo[]> {
     return this.http.get<Photo[]>(`${this.url}`);

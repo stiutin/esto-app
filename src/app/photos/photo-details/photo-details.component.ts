@@ -1,27 +1,33 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { Photo } from '../../core/interfaces/photo';
 import { PhotoDataService } from '../../core/services/photo-data.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
+
 @UntilDestroy()
 @Component({
   selector: 'app-photo-details',
   templateUrl: './photo-details.component.html',
-  styleUrls: [ './photo-details.component.scss' ]
+  styleUrls: ['./photo-details.component.scss'],
+  standalone: true,
+  imports: [RouterLink]
 })
 
 export class PhotoDetailsComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private photoDataService = inject(PhotoDataService);
+  private titleService = inject(Title);
+
   @Input() photo: Photo;
   favoritePhotos: Photo[];
 
-  constructor(
-    private route: ActivatedRoute,
-    private photoDataService: PhotoDataService,
-    private titleService: Title
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.titleService.setTitle('Esto App | Photo');
   }
 

@@ -1,14 +1,17 @@
-<div class="photo-wrapper" *ngIf="photos">
-  <div
-    *ngFor="let photo of photos | slice: 0: visibleImages"
-    class="photo"
-  >
-    <figure>
-      <img [src]="photo.thumbnailUrl" [alt]="" [title]="photo?.title">
-    </figure>
-    <button (click)="addToFav(photo, $event)" class="add-to-fav-btn">Add to Favorites</button>
+@if (photos) {
+  <div class="photo-wrapper">
+    @for (photo of photos | slice: 0: visibleImages; track photo) {
+      <div
+        class="photo"
+        >
+        <figure>
+          <img [src]="photo.thumbnailUrl" [alt]="" [title]="photo?.title">
+        </figure>
+        <button (click)="addToFav(photo, $event)" class="add-to-fav-btn">Add to Favorites</button>
+      </div>
+    }
   </div>
-</div>
+}
 <div (click)="increaseVisibleImagesByClick()" class="load-more-btn">
   <i class="fas fa-caret-down"></i>
   Load more

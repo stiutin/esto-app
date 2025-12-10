@@ -1,14 +1,15 @@
-<ng-container *ngIf="favoritePhotos; else noData">
+@if (favoritePhotos) {
   <div class="photo-wrapper">
-    <div *ngFor="let photo of favoritePhotos" class="photo">
-      <a routerLink="/photos/{{ photo?.id }}">
-        <figure>
-          <img [src]="photo?.url" [alt]=" " [title]="photo?.title">
-        </figure>
-      </a>
-    </div>
+    @for (photo of favoritePhotos; track photo) {
+      <div class="photo">
+        <a routerLink="/photos/{{ photo?.id }}">
+          <figure>
+            <img [src]="photo?.url" [alt]=" " [title]="photo?.title">
+          </figure>
+        </a>
+      </div>
+    }
   </div>
-</ng-container>
-<ng-template #noData>
+} @else {
   <h4>Empty list</h4>
-</ng-template>
+}

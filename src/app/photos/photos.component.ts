@@ -1,25 +1,28 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Photo } from '../core/interfaces/photo';
 import { PhotoDataService } from '../core/services/photo-data.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import { SlicePipe } from '@angular/common';
 
 @UntilDestroy()
 @Component({
   selector: 'app-photos',
   templateUrl: './photos.component.html',
-  styleUrls: ['./photos.component.scss']
+  styleUrls: ['./photos.component.scss'],
+  standalone: true,
+  imports: [SlicePipe]
 })
 
 export class PhotosComponent implements OnInit {
+  private photoDataService = inject(PhotoDataService);
+  private titleService = inject(Title);
+
   public photos: Photo[] = [];
   public favoritePhotos: Photo[];
   public visibleImages = 9;
 
-  constructor(
-    private photoDataService: PhotoDataService,
-    private titleService: Title
-  ) {
+  constructor() {
     this.titleService.setTitle('Esto App | Home');
   }
 

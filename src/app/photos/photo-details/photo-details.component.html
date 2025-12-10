@@ -1,6 +1,8 @@
-<div *ngIf="photo" class="single-photo-wrapper">
-  <figure>
-    <img [src]="photo?.url" [alt]=" " [title]="photo?.title">
-  </figure>
-  <button (click)="removePhoto(photo.id)" [routerLink]="'/photos'" class="remove-from-fav-btn">Remove from favorites</button>
-</div>
+@if (photo) {
+  <div class="single-photo-wrapper">
+    <figure>
+      <img [src]="photo?.url" [alt]=" " [title]="photo?.title">
+    </figure>
+    <button (click)="removePhoto(photo.id)" [routerLink]="'/photos'" class="remove-from-fav-btn">Remove from favorites</button>
+  </div>
+}

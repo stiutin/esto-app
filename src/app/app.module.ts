@@ -9,14 +9,11 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { PhotoDetailsComponent } from './photos/photo-details/photo-details.component';
 import {RouterModule} from '@angular/router';
 
-@NgModule({ declarations: [
-        AppComponent,
-        HeaderComponent,
-        PhotosComponent,
-        FavoritesComponent,
-        PhotoDetailsComponent
-    ],
+@NgModule({ declarations: [AppComponent],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
-        RouterModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        RouterModule, HeaderComponent,
+        PhotosComponent,
+        FavoritesComponent,
+        PhotoDetailsComponent], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
