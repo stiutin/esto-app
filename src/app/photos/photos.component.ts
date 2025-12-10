@@ -7,11 +7,10 @@ import { SlicePipe } from '@angular/common';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-photos',
-  templateUrl: './photos.component.html',
-  styleUrls: ['./photos.component.scss'],
-  standalone: true,
-  imports: [SlicePipe]
+    selector: 'app-photos',
+    templateUrl: './photos.component.html',
+    styleUrls: ['./photos.component.scss'],
+    imports: [SlicePipe]
 })
 
 export class PhotosComponent implements OnInit {

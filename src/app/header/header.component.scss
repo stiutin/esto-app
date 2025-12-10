@@ -1,44 +1,46 @@
-.header {
-  background-color: #fefefe;
-  padding: 15px 0;
-  border-bottom: 1px solid #dadada;
-  margin-bottom: 20px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1;
-}
+:host {
+  .header {
+    background-color: #fefefe;
+    padding: 15px 0;
+    border-bottom: 1px solid #dadada;
+    margin-bottom: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+  }
 
-.main-navbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 500px;
-  margin: 0 auto;
+  .main-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
 
-  &__link {
-    display: block;
-    font-size: 16px;
-    line-height: 120%;
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    color: #fefefe;
-    background-color: #adadad;
-    border-radius: 4px;
-    padding: 10px 20px;
-    margin: 0 5px;
-    text-decoration: none;
-    transition: all 500ms ease-in;
-    min-width: 120px;
-    text-align: center;
+    &__link {
+      display: block;
+      font-size: 16px;
+      line-height: 120%;
+      font-family: "Roboto", sans-serif;
+      font-weight: 500;
+      color: #fefefe;
+      background-color: #adadad;
+      border-radius: 4px;
+      padding: 10px 20px;
+      margin: 0 5px;
+      text-decoration: none;
+      transition: background-color 500ms ease-in;
+      min-width: 120px;
+      text-align: center;
 
-    &:hover {
-      background-color: lighten($color: #0e2f4b, $amount: 25%);
-    }
+      &:hover {
+        background-color: #0e2f4b;
+      }
 
-    &.active {
-      background-color: #0e2e4c;
+      &.active {
+        background-color: #0e2e4c;
+      }
     }
   }
 }

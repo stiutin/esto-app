@@ -8,11 +8,10 @@ import { RouterLink } from '@angular/router';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-favorites',
-  templateUrl: './favorites.component.html',
-  styleUrls: ['./favorites.component.scss'],
-  standalone: true,
-  imports: [RouterLink]
+    selector: 'app-favorites',
+    templateUrl: './favorites.component.html',
+    styleUrls: ['./favorites.component.scss'],
+    imports: [RouterLink]
 })
 
 export class FavoritesComponent implements OnInit {

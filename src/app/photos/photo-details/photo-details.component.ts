@@ -9,11 +9,10 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-photo-details',
-  templateUrl: './photo-details.component.html',
-  styleUrls: ['./photo-details.component.scss'],
-  standalone: true,
-  imports: [RouterLink]
+    selector: 'app-photo-details',
+    templateUrl: './photo-details.component.html',
+    styleUrls: ['./photo-details.component.scss'],
+    imports: [RouterLink]
 })
 
 export class PhotoDetailsComponent implements OnInit {
