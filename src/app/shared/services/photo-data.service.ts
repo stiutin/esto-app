@@ -13,8 +13,6 @@ export class PhotoDataService {
   private readonly http = inject(HttpClient);
 
   public getProducts(): Observable<IResponse> {
-    return this.http.get<IResponse>(`${apiUrl}${EUrlEndpoints.Products}`, {
-
-    });
+    return this.http.get<IResponse>(`${apiUrl}${EUrlEndpoints.Products}`);
   }
 }

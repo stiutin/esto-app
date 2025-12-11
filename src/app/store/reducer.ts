@@ -3,33 +3,33 @@ import * as PhotoActions from './actions';
 import {IProduct} from "../shared/entities/interfaces/product.interface";
 
 export interface PhotoState {
-  photos: IProduct[];
-  favoritePhotos: IProduct[];
+  products: IProduct[];
+  productsInCart: IProduct[];
   error: any;
 }
 
 export const initialState: PhotoState = {
-  photos: [],
-  favoritePhotos: [],
+  products: [],
+  productsInCart: [],
   error: null
 };
 
 export const photoReducer = createReducer(
   initialState,
-  on(PhotoActions.loadPhotosSuccess, (state, { photos }) => ({
+  on(PhotoActions.loadPhotosSuccess, (state, { products }) => ({
     ...state,
-    photos
+    products
   })),
   on(PhotoActions.loadPhotosFailure, (state, { error }) => ({
     ...state,
     error
   })),
-  on(PhotoActions.addToCart, (state, { photo }) => ({
+  on(PhotoActions.addToCart, (state, { product }) => ({
     ...state,
-    favoritePhotos: [...state.favoritePhotos, photo]
+    productsInCart: [...state.productsInCart, product]
   })),
-  on(PhotoActions.removeFromCart, (state, { photoId }) => ({
+  on(PhotoActions.removeFromCart, (state, { productId }) => ({
     ...state,
-    favoritePhotos: state.favoritePhotos.filter(p => p.id !== photoId),
+    productsInCart: state.productsInCart.filter(p => p.id !== productId),
   }))
 );

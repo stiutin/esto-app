@@ -1,0 +1,17 @@
+@if (products$) {
+  <div class="products-list">
+    @for (product of products$ | async; track product) {
+      <div class="product card">
+        <img class="product-img" [src]="product.thumbnail" [alt]="product.title">
+        <div class="product-title">{{ product.title }}</div>
+        <button
+          (click)="addToCart(product, $event)"
+          [disabled]="isInCart(product.id, favoriteIds$ | async)"
+          class="btn btn-primary"
+        >
+          {{ isInCart(product.id, favoriteIds$ | async) ? 'Added' : 'Add' }}
+        </button>
+      </div>
+    }
+  </div>
+}

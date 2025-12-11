@@ -9,8 +9,6 @@
     margin: 90px auto;
 
     .product {
-      display: block;
-
       .product-img {
         max-width: 250px;
         border-radius: 16px;
@@ -19,15 +17,14 @@
       .product-title {
         text-align: center;
       }
-    }
-  }
 
-  h4 {
-    font-size: 20px;
-    line-height: 160%;
-    color: #909090;
-    text-align: center;
-    margin: 80px auto 0;
-    width: 100%;
+      .btn {
+        transition: background-color 500ms ease-in-out;
+
+        &:disabled {
+          cursor: not-allowed;
+        }
+      }
+    }
   }
 }

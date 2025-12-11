@@ -6,15 +6,15 @@ export const selectPhotoState = createFeatureSelector<PhotoState>('photos');
 
 export const selectPhotos = createSelector(
   selectPhotoState,
-  state => state.photos
+  state => state.products
 );
 
 export const selectFavoritePhotos = createSelector(
   selectPhotoState,
-  state => state.favoritePhotos
+  state => state.productsInCart
 );
 
-export const selectPhotoById = (photoId: number) => createSelector(
+export const selectPhotoById = (productId: number) => createSelector(
   selectPhotoState,
-  (state): IProduct | undefined => state.photos.find(p => p.id === photoId)
+  (state): IProduct | undefined => state.products.find(p => p.id === productId)
 );

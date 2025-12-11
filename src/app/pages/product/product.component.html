@@ -1,0 +1,5 @@
+@let product = product$ | async;
+<div class="product-wrapper">
+  <img class="product-img" [src]="product.thumbnail" [alt]="product.title">
+  <button (click)="removeProduct(product.id)" [routerLink]="'/products'" class="btn btn-danger">Remove from Cart</button>
+</div>

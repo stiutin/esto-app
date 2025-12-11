@@ -10,17 +10,17 @@ import {IProduct} from "../../shared/entities/interfaces/product.interface";
 
 @UntilDestroy()
 @Component({
-  selector: 'app-photos',
-  templateUrl: './photos.component.html',
-  styleUrls: ['./photos.component.scss'],
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.scss'],
   imports: [AsyncPipe],
   standalone: true,
 })
 
-export class PhotosComponent implements OnInit {
+export class ProductsComponent implements OnInit {
   private store = inject(Store);
-  protected photos$: Observable<IProduct[]> = this.store.select(PhotoSelectors.selectPhotos);
-  protected favoritePhotos$: Observable<IProduct[]> = this.store.select(PhotoSelectors.selectFavoritePhotos);
+  protected products$: Observable<IProduct[]> = this.store.select(PhotoSelectors.selectPhotos);
+  protected productsInCart$: Observable<IProduct[]> = this.store.select(PhotoSelectors.selectFavoritePhotos);
   private titleService = inject(Title);
 
   constructor() {
@@ -31,16 +31,14 @@ export class PhotosComponent implements OnInit {
     this.store.dispatch(PhotoActions.loadPhotos());
   }
 
-  protected favoriteIds$ = this.favoritePhotos$.pipe(
-    map(favs => favs.map(f => f.id))
-  );
+  protected favoriteIds$ = this.productsInCart$.pipe(map(favs => favs.map(f => f.id)));
 
-  protected isFavorite(photoId: number, favoriteIds: number[]): boolean {
-    return favoriteIds.includes(photoId);
+  protected isInCart(productId: number, favoriteIds: number[]): boolean {
+    return favoriteIds.includes(productId);
   }
 
-  protected addToFav(photo: IProduct, event: MouseEvent): void {
-    this.store.dispatch(PhotoActions.addToCart({ photo }));
+  protected addToCart(product: IProduct, event: MouseEvent): void {
+    this.store.dispatch(PhotoActions.addToCart({ product }));
     (event.target as HTMLButtonElement).disabled = true;
   }
 }

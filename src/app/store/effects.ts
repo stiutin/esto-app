@@ -18,7 +18,7 @@ export class PhotoEffects {
         this.photoService.getProducts().pipe(
           map(response =>
             PhotoActions.loadPhotosSuccess({
-              photos: response.products
+              products: response.products
             })
           ),
           catchError(error =>
