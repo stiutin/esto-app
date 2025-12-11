@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 
-import { PhotosComponent } from './pages/photos/photos.component';
-import { PhotoDetailsComponent } from './pages/photos/photo-details/photo-details.component';
+import { ProductsComponent } from './pages/products/products.component';
+import { ProductComponent } from './pages/product/product.component';
 import { CartComponent } from './pages/cart/cart.component';
 
 export const routes: Routes = [
-  { path: '', component: PhotosComponent },
+  { path: '', component: ProductsComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'photos/:id', component: PhotoDetailsComponent },
+  { path: 'product/:id', component: ProductComponent },
   { path: '**', redirectTo: '' }
 ];

@@ -16,7 +16,7 @@ import {IProduct} from "../../shared/entities/interfaces/product.interface";
 })
 export class CartComponent {
   private readonly store = inject(Store);
-  protected favoritePhotos$: Observable<IProduct[]> = this.store.select(PhotoSelectors.selectFavoritePhotos);
+  protected productsInCart$: Observable<IProduct[]> = this.store.select(PhotoSelectors.selectFavoritePhotos);
   private readonly titleService = inject(Title);
 
   constructor() {

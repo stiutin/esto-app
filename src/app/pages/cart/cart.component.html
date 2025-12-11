@@ -1,13 +1,10 @@
-@if (favoritePhotos$) {
-  <div class="photo-wrapper">
-    @for (photo of favoritePhotos$ | async; track photo) {
-      <div class="photo">
-        <a routerLink="/photos/{{ photo?.id }}">
-          <figure>
-            <img [src]="photo?.thumbnail" [alt]=" " [title]="photo?.title">
-          </figure>
-        </a>
-      </div>
+@if (productsInCart$) {
+  <div class="products-list">
+    @for (product of productsInCart$ | async; track product) {
+      <a class="product" routerLink="/product/{{ product.id }}">
+        <img class="product-img" [src]="product.thumbnail" [alt]="product.title">
+        <div class="product-title">{{ product.title }}</div>
+      </a>
     }
   </div>
 } @else {
