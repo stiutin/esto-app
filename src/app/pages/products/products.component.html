@@ -11,14 +11,14 @@
           {{ product.description }}
         </mat-card-content>
         <mat-card-actions>
-          <button 
-            matButton="filled"
+          <button
+            mat-flat-button
             (click)="addToCart(product, $event)"
             [disabled]="isInCart(product.id, favoriteIds$ | async)"
           >
             {{ isInCart(product.id, favoriteIds$ | async) ? 'Added' : 'Add' }}
           </button>
-          <button matButton="tonal">More</button>
+          <button mat-button routerLink="/product/{{ product.id }}">More</button>
         </mat-card-actions>
       </mat-card>
     }

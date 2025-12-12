@@ -8,12 +8,13 @@ import {map, Observable} from 'rxjs';
 import * as PhotoActions from '../../store/actions';
 import * as PhotoSelectors from '../../store/selectors';
 import {IProduct} from "../../shared/entities/interfaces/product.interface";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
-  imports: [AsyncPipe, MatCardModule, MatButtonModule],
+  imports: [AsyncPipe, MatCardModule, MatButtonModule, RouterLink],
   standalone: true,
 })
 

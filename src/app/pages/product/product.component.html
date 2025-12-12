@@ -1,5 +1,12 @@
 @let product = product$ | async;
-<div class="product-wrapper">
-  <img class="product-img" [src]="product.thumbnail" [alt]="product.title">
-  <button (click)="removeProduct(product.id)" [routerLink]="'/products'" class="btn btn-danger">Remove from Cart</button>
-</div>
+
+<mat-card class="product-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ product.title }}</mat-card-title>
+    <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="product.thumbnail" [alt]="product.title">
+  <mat-card-content>
+    {{ product.description }}
+  </mat-card-content>
+</mat-card>
