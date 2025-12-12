@@ -6,20 +6,34 @@ import * as PhotoSelectors from '../../store/selectors';
 import { RouterLink } from '@angular/router';
 import {AsyncPipe} from "@angular/common";
 import {IProduct} from "../../shared/entities/interfaces/product.interface";
+import {MatButton} from "@angular/material/button";
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardImage,
+  MatCardSubtitle, MatCardTitle
+} from "@angular/material/card";
+import * as PhotoActions from "../../store/actions";
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
-  imports: [RouterLink, AsyncPipe],
+  imports: [RouterLink, AsyncPipe, MatButton, MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardImage, MatCardSubtitle, MatCardTitle],
   standalone: true
 })
 export class CartComponent {
   private readonly store = inject(Store);
-  protected productsInCart$: Observable<IProduct[]> = this.store.select(PhotoSelectors.selectFavoritePhotos);
   private readonly titleService = inject(Title);
+  protected productsInCart$: Observable<IProduct[]> = this.store.select(PhotoSelectors.selectFavoritePhotos);
 
   constructor() {
     this.titleService.setTitle('Esto App | Cart');
+  }
+
+  protected removeProduct(productId: number): void {
+    this.store.dispatch(PhotoActions.removeFromCart({ productId }));
   }
 }
