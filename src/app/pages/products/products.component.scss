@@ -3,13 +3,25 @@
     align-items: stretch;
     display: grid;
     gap: 20px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     justify-content: center;
-    max-width: 800px;
+    max-width: 1024px;
     margin: 90px auto;
 
     .product-card {
+      justify-content: space-between;
       max-width: 400px;
+
+      .product-description {
+        font-size: 16px;
+        line-height: 120%;
+      }
+
+      .products-buttons {
+        align-items: center;
+        display: flex;
+        gap: 8px;
+      }
     }
   }
 }

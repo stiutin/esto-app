@@ -8,9 +8,9 @@
         </mat-card-header>
         <img mat-card-image [src]="product.thumbnail" [alt]="product.title">
         <mat-card-content>
-          {{ product.description }}
+          <p class="product-description">{{ product.description }}</p>
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions class="products-buttons">
           <button
             mat-flat-button
             (click)="addToCart(product, $event)"
@@ -18,7 +18,12 @@
           >
             {{ isInCart(product.id, favoriteIds$ | async) ? 'Added' : 'Add' }}
           </button>
-          <button mat-button routerLink="/product/{{ product.id }}">More</button>
+          <button
+            mat-stroked-button
+            routerLink="/product/{{ product.id }}"
+          >
+            More
+          </button>
         </mat-card-actions>
       </mat-card>
     }
