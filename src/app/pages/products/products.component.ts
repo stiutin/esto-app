@@ -1,19 +1,19 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {AsyncPipe} from '@angular/common';
 import { Title } from '@angular/platform-browser';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
 import { Store } from '@ngrx/store';
 import {map, Observable} from 'rxjs';
-import {UntilDestroy} from "@ngneat/until-destroy";
 import * as PhotoActions from '../../store/actions';
 import * as PhotoSelectors from '../../store/selectors';
 import {IProduct} from "../../shared/entities/interfaces/product.interface";
 
-@UntilDestroy()
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, MatCardModule, MatButtonModule],
   standalone: true,
 })
 

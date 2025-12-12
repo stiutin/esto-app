@@ -1,17 +1,26 @@
 @if (products$) {
   <div class="products-list">
     @for (product of products$ | async; track product) {
-      <div class="product card">
-        <img class="product-img" [src]="product.thumbnail" [alt]="product.title">
-        <div class="product-title">{{ product.title }}</div>
-        <button
-          (click)="addToCart(product, $event)"
-          [disabled]="isInCart(product.id, favoriteIds$ | async)"
-          class="btn btn-primary"
-        >
-          {{ isInCart(product.id, favoriteIds$ | async) ? 'Added' : 'Add' }}
-        </button>
-      </div>
+      <mat-card class="product-card" appearance="outlined">
+        <mat-card-header>
+          <mat-card-title>{{ product.title }}</mat-card-title>
+          <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="product.thumbnail" [alt]="product.title">
+        <mat-card-content>
+          {{ product.description }}
+        </mat-card-content>
+        <mat-card-actions>
+          <button 
+            matButton="filled"
+            (click)="addToCart(product, $event)"
+            [disabled]="isInCart(product.id, favoriteIds$ | async)"
+          >
+            {{ isInCart(product.id, favoriteIds$ | async) ? 'Added' : 'Add' }}
+          </button>
+          <button matButton="tonal">More</button>
+        </mat-card-actions>
+      </mat-card>
     }
   </div>
 }
