@@ -1,9 +1,8 @@
 :host {
   .header {
     background-color: #fefefe;
-    padding: 15px 0;
-    border-bottom: 1px solid #dadada;
-    margin-bottom: 20px;
+    padding: 16px;
+    border-bottom: 1px solid #0d0d0d;
     position: fixed;
     top: 0;
     left: 0;
@@ -15,30 +14,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 500px;
     margin: 0 auto;
 
-    &__link {
+    .main-navbar__link {
       display: block;
       font-size: 16px;
       line-height: 100%;
       font-weight: 500;
-      color: #fefefe;
-      background-color: #adadad;
-      border-radius: 4px;
-      padding: 12px 32px;
+      color: #0d0d0d;
       margin: 0 4px;
       text-decoration: none;
-      transition: background-color 500ms ease-in;
       text-align: center;
-
-      &:hover {
-        background-color: #0e2f4b;
-      }
-
-      &.active {
-        background-color: #0e2e4c;
-      }
     }
   }
 }
