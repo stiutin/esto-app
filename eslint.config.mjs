@@ -11,12 +11,36 @@ import unusedImports from 'eslint-plugin-unused-imports';
 import tsEslint from 'typescript-eslint';
 
 /*
- * House ESLint config (shared core across the portfolio: import sorting, unused imports,
- * explicit member accessibility, curly braces, no stray console) plus Larder's own stricter
- * rules: magic numbers, naming, member ordering, RxJS conventions.
- * Formatting is Prettier's job (`npm run format:check`), not ESLint's.
+ * Larder's own rules sit on top of the house rules: magic numbers, naming, member ordering and RxJS
+ * conventions. Formatting is Prettier's job.
  */
 const ANGULAR_COMPONENT_PREFIXES = ['app'];
+
+/** House rules, shared by every project in the portfolio. Formatting itself is Prettier's job. */
+const HOUSE_RULES = {
+  'arrow-body-style': ['error', 'as-needed'],
+  curly: ['error', 'all'],
+  'no-console': ['error', {allow: ['warn', 'error']}],
+  'simple-import-sort/exports': 'error',
+  'simple-import-sort/imports': 'error',
+  'unused-imports/no-unused-imports': 'error',
+};
+
+/** House rules for TypeScript. */
+const HOUSE_TS_RULES = {
+  '@typescript-eslint/array-type': ['error', {default: 'array'}],
+  '@typescript-eslint/explicit-member-accessibility': [
+    'error',
+    {accessibility: 'explicit', overrides: {constructors: 'no-public'}},
+  ],
+  '@typescript-eslint/explicit-module-boundary-types': 'error',
+  '@typescript-eslint/no-explicit-any': 'error',
+  '@typescript-eslint/no-unused-vars': 'off',
+  'unused-imports/no-unused-vars': [
+    'error',
+    {argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_', varsIgnorePattern: '^_'},
+  ],
+};
 
 export default defineConfig(
   globalIgnores(['dist/', '.angular/', 'coverage/', 'out-tsc/']),
@@ -29,7 +53,6 @@ export default defineConfig(
     },
     extends: [
       eslint.configs.recommended,
-      eslintConfigPrettier,
       ...tsEslint.configs.recommendedTypeChecked,
       ...tsEslint.configs.stylistic,
       ...angular.configs.tsRecommended,
@@ -43,18 +66,8 @@ export default defineConfig(
       'no-unsanitized': noUnsanitized,
     },
     rules: {
-      'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
-      'comma-dangle': [
-        'error',
-        {
-          arrays: 'always-multiline',
-          objects: 'always-multiline',
-          imports: 'always-multiline',
-          exports: 'always-multiline',
-          functions: 'never',
-        },
-      ],
+      ...HOUSE_RULES,
+      ...HOUSE_TS_RULES,
       'max-lines': [
         'error',
         {
@@ -89,25 +102,7 @@ export default defineConfig(
       '@angular-eslint/no-host-metadata-property': 'off',
       '@angular-eslint/prefer-on-push-component-change-detection': 'error',
       '@angular-eslint/prefer-signals': 'error',
-      '@typescript-eslint/explicit-module-boundary-types': 'error',
       '@angular-eslint/no-duplicates-in-metadata-arrays': ['error'],
-      '@typescript-eslint/explicit-member-accessibility': [
-        'error',
-        {
-          accessibility: 'explicit',
-          overrides: {
-            methods: 'explicit',
-            constructors: 'no-public',
-            properties: 'explicit',
-          },
-        },
-      ],
-      '@typescript-eslint/array-type': [
-        'error',
-        {
-          default: 'array',
-        },
-      ],
       '@typescript-eslint/consistent-type-assertions': [
         'error',
         {
@@ -201,16 +196,6 @@ export default defineConfig(
           format: ['camelCase'],
         },
       ],
-      '@typescript-eslint/no-unused-vars': 'off',
-      'unused-imports/no-unused-imports': 'error',
-      'unused-imports/no-unused-vars': [
-        'error',
-        {
-          argsIgnorePattern: '^_$',
-          varsIgnorePattern: '^_$',
-          caughtErrorsIgnorePattern: '^_$',
-        },
-      ],
       '@typescript-eslint/no-namespace': 'off',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-parameter-properties': 'off',
@@ -227,28 +212,12 @@ export default defineConfig(
           ignoreStatic: true,
         },
       ],
-      quotes: [
-        'error',
-        'single',
-        {
-          avoidEscape: true,
-        },
-      ],
-      semi: ['error', 'always'],
-      curly: ['error', 'all'],
       '@typescript-eslint/triple-slash-reference': [
         'error',
         {
           path: 'always',
           types: 'prefer-import',
           lib: 'always',
-        },
-      ],
-      'arrow-body-style': ['error', 'as-needed'],
-      'no-console': [
-        'error',
-        {
-          allow: ['warn', 'error'],
         },
       ],
       'no-param-reassign': [
@@ -343,7 +312,6 @@ export default defineConfig(
     rules: {
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/dot-notation': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/unbound-method': 'off',
       '@typescript-eslint/consistent-type-assertions': 'off',
       '@typescript-eslint/no-magic-numbers': 'off',
@@ -367,5 +335,6 @@ export default defineConfig(
       '@typescript-eslint/require-await': 'off',
       'rxjs/finnish': 'off',
     },
-  }
+  },
+  eslintConfigPrettier
 );
